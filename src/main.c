@@ -5,10 +5,13 @@
 int main(int argc, char** argv)
 {
   struct chip48 chip48;
-  chip48.registers.V[0x0f] = 50;
+  chip48.registers.SP = 0;
 
-  chip48_memory_set(&chip48.memory, 0x400, 'Z'); // 0x400 in hexa translates to 1024 in decimat
-  printf("%c\n", chip48_memory_get(&chip48.memory, 50)); // To see the Z char printed put the address 1024 instead of 50
+  chip48_stack_push(&chip48, 0xff);
+  chip48_stack_push(&chip48, 0xaa);
+
+  printf("%x\n", chip48_stack_pop(&chip48));
+  printf("%x\n", chip48_stack_pop(&chip48));
 
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
