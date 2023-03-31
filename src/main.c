@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <windows.h>
 #include <SDL2/SDL.h>
 #include "chip48.h"
 #include "chip48keyboard.h"
@@ -14,6 +15,7 @@ int main(int argc, char** argv)
 {
   struct chip48 chip48;
   chip48_init(&chip48);
+  chip48.registers.delay_timer = 255;
 
   chip48_screen_draw_sprite(&chip48.screen, 32, 100, &chip48.memory.memory[0x00], 5);
 
@@ -85,6 +87,13 @@ int main(int argc, char** argv)
     }
 
     SDL_RenderPresent(renderer);
+
+    if (chip48.registers.delay_timer > 0)
+    {
+      Sleep(100);
+      chip48.registers.delay_timer -= 1;
+      printf("DELAY!\n");
+    }
   }
 
 out:
