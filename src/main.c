@@ -4,8 +4,12 @@
 
 int main(int argc, char** argv)
 {
+  struct chip48 chip48;
+  chip48_memory_set(&chip48.memory, 0x400, 'Z'); // 0x400 in hexa translates to 1024 in decimat
+  printf("%c\n", chip48_memory_get(&chip48.memory, 50)); // To see the Z char printed put the address 1024 instead of 50
+
   SDL_Init(SDL_INIT_EVERYTHING);
-  SDL_Window *window = SDL_CreateWindow(
+  SDL_Window* window = SDL_CreateWindow(
     EMULATOR_WINDOW_TITLE,
     SDL_WINDOWPOS_UNDEFINED,
     SDL_WINDOWPOS_UNDEFINED,
@@ -14,7 +18,7 @@ int main(int argc, char** argv)
     SDL_WINDOW_SHOWN
   );
 
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
   while (1)
   {
     SDL_Event event;
