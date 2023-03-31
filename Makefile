@@ -1,7 +1,7 @@
 INCLUDES = -I ./include
 FLAGS = -g
 
-OBJECTS = ./build/chip48memory.o ./build/chip48stack.o ./build/chip48keyboard.o ./build/chip48.o
+OBJECTS = ./build/chip48memory.o ./build/chip48stack.o ./build/chip48keyboard.o ./build/chip48.o ./build/chip48screen.o
 
 all: ${OBJECTS}
 	gcc ${FLAGS} ${INCLUDES} ./src/main.c ${OBJECTS} -L ./lib -lmingw32 -lSDL2main -lSDL2 -o ./bin/main
@@ -17,6 +17,9 @@ all: ${OBJECTS}
 
 ./build/chip48.o: src/chip48.c
 	gcc ${FLAGS} ${INCLUDES} ./src/chip48.c -c -o ./build/chip48.o
+
+./build/chip48screen.o: src/chip48screen.c
+	gcc ${FLAGS} ${INCLUDES} ./src/chip48screen.c -c -o ./build/chip48screen.o
 
 clean:
 	del build\*.o

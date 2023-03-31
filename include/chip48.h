@@ -6,6 +6,7 @@
 #include "chip48registers.h"
 #include "chip48stack.h"
 #include "chip48keyboard.h"
+#include "chip48screen.h"
 
 struct chip48
 {
@@ -13,6 +14,7 @@ struct chip48
   struct chip48_stack stack;
   struct chip48_registers registers;
   struct chip48_keyboard keyboard;
+  struct chip48_screen screen;
 };
 
 void chip48_init(struct chip48* chip48);

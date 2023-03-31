@@ -15,6 +15,8 @@ int main(int argc, char** argv)
   struct chip48 chip48;
   chip48_init(&chip48);
 
+  chip48_screen_set(&chip48.screen, 10, 1);
+
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
     EMULATOR_WINDOW_TITLE,
@@ -65,12 +67,23 @@ int main(int argc, char** argv)
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
-    SDL_Rect r;
-    r.x = 0;
-    r.y = 0;
-    r.w = 40;
-    r.h = 40;
-    SDL_RenderFillRect(renderer, &r);
+    
+    for (int x = 0; x < CHIP48_WIDTH; x++)
+    {
+      for (int y = 0; y < CHIP48_HEIGHT; y++)
+      {
+        if (chip48_screen_is_set(&chip48.screen, x, y))
+        {
+          SDL_Rect r;
+          r.x = x * CHIP48_WINDOW_MULTIPLIER;
+          r.y = y * CHIP48_WINDOW_MULTIPLIER;
+          r.w = CHIP48_WINDOW_MULTIPLIER;
+          r.h = CHIP48_WINDOW_MULTIPLIER;
+          SDL_RenderFillRect(renderer, &r);
+        }
+      }
+    }
+
     SDL_RenderPresent(renderer);
   }
 
