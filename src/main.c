@@ -15,7 +15,7 @@ int main(int argc, char** argv)
   struct chip48 chip48;
   chip48_init(&chip48);
 
-  chip48_screen_set(&chip48.screen, 10, 1);
+  chip48_screen_draw_sprite(&chip48.screen, 32, 100, &chip48.memory.memory[0x00], 5);
 
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
