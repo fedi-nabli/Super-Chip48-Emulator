@@ -5,6 +5,8 @@
 int main(int argc, char** argv)
 {
   struct chip48 chip48;
+  chip48.registers.V[0x0f] = 50;
+
   chip48_memory_set(&chip48.memory, 0x400, 'Z'); // 0x400 in hexa translates to 1024 in decimat
   printf("%c\n", chip48_memory_get(&chip48.memory, 50)); // To see the Z char printed put the address 1024 instead of 50
 
