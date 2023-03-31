@@ -15,4 +15,6 @@ struct chip48
   struct chip48_keyboard keyboard;
 };
 
+void chip48_init(struct chip48* chip48);
+
 #endif  

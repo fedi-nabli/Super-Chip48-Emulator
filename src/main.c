@@ -13,6 +13,7 @@ const char keyboard_map[CHIP48_TOTAL_KEYS] = {
 int main(int argc, char** argv)
 {
   struct chip48 chip48;
+  chip48_init(&chip48);
 
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
