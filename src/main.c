@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 {
   struct chip48 chip48;
   chip48_init(&chip48);
-  chip48.registers.delay_timer = 255;
+  chip48.registers.sound_timer = 30;
 
   chip48_screen_draw_sprite(&chip48.screen, 32, 100, &chip48.memory.memory[0x00], 5);
 
@@ -92,7 +92,12 @@ int main(int argc, char** argv)
     {
       Sleep(100);
       chip48.registers.delay_timer -= 1;
-      printf("DELAY!\n");
+    }
+
+    if (chip48.registers.sound_timer > 0)
+    {
+      Beep(15000, 100 * chip48.registers.sound_timer);
+      chip48.registers.sound_timer = 0;
     }
   }
 
