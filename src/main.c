@@ -1,17 +1,18 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <SDL2/SDL.h>
 #include "chip48.h"
+#include "chip48keyboard.h"
+
+const char keyboard_map[CHIP48_TOTAL_KEYS] = {
+  SDLK_0, SDLK_1, SDLK_2, SDLK_3, SDLK_4, SDLK_5,
+  SDLK_6, SDLK_7, SDLK_8, SDLK_9, SDLK_a, SDLK_b,
+  SDLK_c, SDLK_d, SDLK_e, SDLK_f
+};
 
 int main(int argc, char** argv)
 {
   struct chip48 chip48;
-  chip48.registers.SP = 0;
-
-  chip48_stack_push(&chip48, 0xff);
-  chip48_stack_push(&chip48, 0xaa);
-
-  printf("%x\n", chip48_stack_pop(&chip48));
-  printf("%x\n", chip48_stack_pop(&chip48));
 
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
@@ -30,9 +31,33 @@ int main(int argc, char** argv)
 
     while (SDL_PollEvent(&event))
     {
-      if (event.type == SDL_QUIT)
+      switch (event.type)
       {
-        goto out;
+        case SDL_QUIT:
+          goto out;
+        break;
+
+        case SDL_KEYDOWN:
+        {
+          char key = event.key.keysym.sym;
+          int vkey = chip48_keyboard_map(keyboard_map, key);
+          if (vkey != -1)
+          {
+            chip48_keyboard_down(&chip48.keyboard, vkey);
+          }
+        }
+        break;
+
+        case SDL_KEYUP:
+        {
+          char key = event.key.keysym.sym;
+          int vkey = chip48_keyboard_map(keyboard_map, key);
+          if (vkey != -1)
+          {
+            chip48_keyboard_up(&chip48.keyboard, vkey);
+          }
+        }
+        break;
       }
     }
 
