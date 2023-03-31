@@ -13,9 +13,39 @@ const char keyboard_map[CHIP48_TOTAL_KEYS] = {
 
 int main(int argc, char** argv)
 {
+  if (argc < 2)
+  {
+    printf("You must provide a file to load");
+    return -1;
+  }
+
+  const char* filename = argv[1];
+  printf("The filename to load is: %s\n", filename);
+
+  FILE* file = fopen(filename, "rb");
+  if (!file)
+  {
+    printf("Failed to open file");
+    fclose(file);
+    return -1;
+  }
+
+  fseek(file, 0, SEEK_END);
+  long size = ftell(file);
+  fseek(file, 0, SEEK_SET);
+
+  char buf[size];
+  int res = fread(buf, size, 1, file);
+  if (res != 1)
+  {
+    printf("Failed to read from file");
+    fclose(file);
+    return -1;
+  }
+
   struct chip48 chip48;
   chip48_init(&chip48);
-  chip48.registers.sound_timer = 30;
+  chip48_load(&chip48, buf, size);
 
   chip48_screen_draw_sprite(&chip48.screen, 32, 100, &chip48.memory.memory[0x00], 5);
 
@@ -99,6 +129,10 @@ int main(int argc, char** argv)
       Beep(15000, 100 * chip48.registers.sound_timer);
       chip48.registers.sound_timer = 0;
     }
+
+    unsigned short opcode = chip48_memory_get_short(&chip48.memory, chip48.registers.PC);
+    chip48_exec(&chip48, opcode);
+    chip48.registers.PC += 2;
   }
 
 out:

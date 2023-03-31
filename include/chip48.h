@@ -7,6 +7,7 @@
 #include "chip48stack.h"
 #include "chip48keyboard.h"
 #include "chip48screen.h"
+#include <stddef.h>
 
 struct chip48
 {
@@ -18,5 +19,7 @@ struct chip48
 };
 
 void chip48_init(struct chip48* chip48);
+void chip48_load(struct chip48* chip48, const char* buf, size_t size);
+void chip48_exec(struct chip48* chip48, unsigned short opcode);
 
-#endif  
+#endif

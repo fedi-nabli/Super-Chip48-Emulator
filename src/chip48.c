@@ -1,5 +1,6 @@
 #include "chip48.h"
 #include <memory.h>
+#include <assert.h>
 
 const char chip48_default_character_set[] = {
   0xf0, 0x90, 0x90, 0x90, 0xf0,
@@ -25,3 +26,13 @@ void chip48_init(struct chip48* chip48)
   memset(chip48, 0, sizeof(struct chip48));
   memcpy(&chip48->memory.memory, chip48_default_character_set, sizeof(chip48_default_character_set));
 }
+
+void chip48_load(struct chip48* chip48, const char* buf, size_t size)
+{
+  assert(size+CHIP48_PROGRAM_LOAD_ADDRESS < CHIP48_MEMORY_SIZE);
+  memcpy(&chip48->memory.memory[CHIP48_PROGRAM_LOAD_ADDRESS], buf, size);
+  chip48->registers.PC = CHIP48_PROGRAM_LOAD_ADDRESS;
+}
+
+void chip48_exec(struct chip48* chip48, unsigned short opcode)
+{}

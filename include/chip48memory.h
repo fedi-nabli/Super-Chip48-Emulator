@@ -10,5 +10,6 @@ struct chip48_memory
 
 void chip48_memory_set(struct chip48_memory* memory, int index, unsigned char val);
 unsigned char chip48_memory_get(struct chip48_memory* memory, int index);
+unsigned short chip48_memory_get_short(struct chip48_memory* memory, int index);
 
 #endif
