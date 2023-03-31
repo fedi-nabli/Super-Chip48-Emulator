@@ -1,0 +1,10 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define EMULATOR_WINDOW_TITLE "Chip48 Emulator"
+#define CHIP48_MEMORY_SIZE 4096
+#define CHIP48_WIDTH 64
+#define CHIP48_HEIGHT 32
+#define CHIP48_WINDOW_MULTIPLIER 10
+
+#endif
