@@ -9,17 +9,17 @@ static void chip48_stack_in_bounds(struct chip48* chip48)
 
 void chip48_stack_push(struct chip48* chip48, unsigned short val)
 {
+  chip48->registers.SP += 1;
   chip48_stack_in_bounds(chip48);
 
   chip48->stack.stack[chip48->registers.SP] = val;
-  chip48->registers.SP += 1;
 }
 
 unsigned short chip48_stack_pop(struct chip48* chip48)
 {
-  chip48->registers.SP -= 1;
   chip48_stack_in_bounds(chip48);
 
-  unsigned short val = chip48->stack.stack[chip48->registers.SP];
-  return val;
+  unsigned short result = chip48->stack.stack[chip48->registers.SP];
+  chip48->registers.SP -= 1;
+  return result;
 }

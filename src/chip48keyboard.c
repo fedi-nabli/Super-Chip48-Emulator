@@ -6,11 +6,16 @@ static void chip48_keyboard_ensure_in_bounds(int key)
   assert(key >= 0 && key < CHIP48_TOTAL_KEYS);
 }
 
-int chip48_keyboard_map(const char* map, char key)
+void chip48_keyboard_set_map(struct chip48_keyboard* keyboard, const char* map)
+{
+  keyboard->keyboard_map = map;
+}
+
+int chip48_keyboard_map(struct chip48_keyboard* keyboard, char key)
 {
   for (int i = 0; i < CHIP48_TOTAL_KEYS; i++)
   {
-    if (map[i] == key)
+    if (keyboard->keyboard_map[i] == key)
     {
       return i;
     }

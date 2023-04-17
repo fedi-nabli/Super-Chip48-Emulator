@@ -47,7 +47,7 @@ int main(int argc, char** argv)
   chip48_init(&chip48);
   chip48_load(&chip48, buf, size);
 
-  chip48_screen_draw_sprite(&chip48.screen, 32, 100, &chip48.memory.memory[0x00], 5);
+  chip48_keyboard_set_map(&chip48.keyboard, keyboard_map);
 
   SDL_Init(SDL_INIT_EVERYTHING);
   SDL_Window* window = SDL_CreateWindow(
@@ -60,6 +60,7 @@ int main(int argc, char** argv)
   );
 
   SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_TEXTUREACCESS_TARGET);
+
   while (1)
   {
     SDL_Event event;
@@ -75,7 +76,7 @@ int main(int argc, char** argv)
         case SDL_KEYDOWN:
         {
           char key = event.key.keysym.sym;
-          int vkey = chip48_keyboard_map(keyboard_map, key);
+          int vkey = chip48_keyboard_map(&chip48.keyboard, key);
           if (vkey != -1)
           {
             chip48_keyboard_down(&chip48.keyboard, vkey);
@@ -86,7 +87,7 @@ int main(int argc, char** argv)
         case SDL_KEYUP:
         {
           char key = event.key.keysym.sym;
-          int vkey = chip48_keyboard_map(keyboard_map, key);
+          int vkey = chip48_keyboard_map(&chip48.keyboard, key);
           if (vkey != -1)
           {
             chip48_keyboard_up(&chip48.keyboard, vkey);
@@ -131,8 +132,8 @@ int main(int argc, char** argv)
     }
 
     unsigned short opcode = chip48_memory_get_short(&chip48.memory, chip48.registers.PC);
-    chip48_exec(&chip48, opcode);
     chip48.registers.PC += 2;
+    chip48_exec(&chip48, opcode);
   }
 
 out:

@@ -1,4 +1,5 @@
 #include "chip48screen.h"
+#include <memory.h>
 #include <assert.h>
 
 static void chip48_screen_check_bounds(int x, int y)
@@ -10,6 +11,11 @@ void chip48_screen_set(struct chip48_screen* screen, int x, int y)
 {
   chip48_screen_check_bounds(x, y);
   screen->pixels[y][x] = true;
+}
+
+void chip48_screen_clear(struct chip48_screen* screen)
+{
+  memset(screen->pixels, 0, sizeof(screen->pixels));
 }
 
 bool chip48_screen_is_set(struct chip48_screen* screen, int x, int y)
