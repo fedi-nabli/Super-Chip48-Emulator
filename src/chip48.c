@@ -289,6 +289,12 @@ static void chip48_execute_extended(struct chip48* chip48, unsigned short opcode
     // Dxyn - DRW Vx, Vy, nibble. Draws sprite to the screen
     case 0xD000:
     {
+      // Dxy0 - DRW Vx, Vy, 0. Draws sprite to the screen
+      if (!n)
+      {
+        const char* sprite = (const char*) &chip48->memory.memory[chip48->registers.I];
+        chip48->registers.V[0x0f] = chip48_screen_draw_sprite(&chip48->screen, chip48->registers.V[x], chip48->registers.V[y], sprite, 0);
+      }
       const char* sprite = (const char*) &chip48->memory.memory[chip48->registers.I];
       chip48->registers.V[0x0f] = chip48_screen_draw_sprite(&chip48->screen, chip48->registers.V[x], chip48->registers.V[y], sprite, n);
     }
