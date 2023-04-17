@@ -191,7 +191,7 @@ static void chip48_execute_extended_F(struct chip48* chip48, unsigned short opco
     }
     break;
 
-    // fx65 - LD Vx, [i]
+    // fx65 - LD Vx, [I]
     case 0x65:
     {
       for (int i = 0; i <= x; i++)
@@ -213,6 +213,11 @@ static void chip48_execute_extended(struct chip48* chip48, unsigned short opcode
 
   switch (opcode & 0xf000)
   {
+    // EXIT
+    case 0x00fd:
+      exit(0);
+    break;
+
     // JP addr, 1nnn Jum to location nnn's
     case 0x1000:
       chip48->registers.PC = nnn;
