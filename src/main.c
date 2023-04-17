@@ -121,13 +121,13 @@ int main(int argc, char** argv)
 
     if (chip48.registers.delay_timer > 0)
     {
-      Sleep(100);
+      Sleep(3);
       chip48.registers.delay_timer -= 1;
     }
 
     if (chip48.registers.sound_timer > 0)
     {
-      Beep(15000, 100 * chip48.registers.sound_timer);
+      Beep(15000, 15 * chip48.registers.sound_timer);
       chip48.registers.sound_timer = 0;
     }
 
