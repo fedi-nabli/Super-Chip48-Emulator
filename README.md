@@ -1,6 +1,7 @@
 # CHIP-48 OR SUPER CHIP-8 EMULATOR
 
 ### The super chip-8 emulator is fully made using the C programming language.
+### For the graphics rendering, I used the SDL2 Library. No need for additional installations, all binary files are already included.
 <br />
 
 ## Usage
