@@ -1,6 +1,6 @@
 # CHIP-48 OR SUPER CHIP-8 EMULATOR
 
-### The super chip-8 emulator is fully in the C programming language.
+### The super chip-8 emulator is fully made using the C programming language.
 <br />
 
 ## Usage
